@@ -1,0 +1,131 @@
+aid: pomelo
+name: Pomelo
+review:
+  question: Does Pomelo (pomelo.la) expose a documented public streaming or WebSocket API, and which Pomelo company is this?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Pomelo's real-time surface is not a server
+    push stream that the client subscribes to over WebSocket or SSE. Instead it
+    is a collaborative, synchronous request/response webhook: Pomelo POSTs each
+    card authorization (and other events) to an HTTPS endpoint the client hosts,
+    and the client replies inline. Event delivery and the authorizer are HTTP
+    callbacks, not a WebSocket or SSE channel originated by Pomelo, so no
+    AsyncAPI streaming document is warranted under current scope.
+disambiguation:
+  selected: Pomelo (pomelo.la)
+  selectedDescription: |
+    Latin American card-issuing, issuer-processing, and embedded-finance
+    platform (founded in Argentina). REST API at https://api.pomelo.la with
+    OAuth 2.0 client-credentials Bearer auth, developer portal at
+    developers.pomelo.la, GitHub org github.com/pomelo-la.
+  notToBeConfusedWith:
+    - name: Pomelo (pomelo.com)
+      note: US cross-border remittance and credit-builder consumer app; not a card-issuing API platform.
+    - name: Pomelo Pay / Pomelo Group (pomelogroup.com, pomelopay.github.io)
+      note: UK unified payment / acquiring platform with its own separate API; unrelated to pomelo.la.
+findings:
+  summary: |
+    Pomelo (pomelo.la) publishes a documented REST API at https://api.pomelo.la
+    secured with OAuth 2.0 client-credentials Bearer tokens obtained from
+    /oauth/token (audience-scoped JWT, expires_in 86400). The surface covers
+    Users & KYC/KYB, Cards (issuing, activation, batches, shipment), Card
+    Accounts (balances, movements), Transactions (processing, summaries),
+    Transfers / Settlements, and additional modules (tokenization, credit core,
+    loyalty, 3DS, fraud prevention). The platform's real-time behavior is a
+    collaborative authorizer: Pomelo sends a signed POST for each incoming
+    authorization to a client-hosted HTTPS endpoint, and the client must return
+    a signed approve/reject response within the network time window. Event
+    notifications (cards, users, transactions, adjustments) are delivered the
+    same way - outbound signed HTTPS POSTs to client webhook endpoints. No
+    Pomelo-originated WebSocket (ws:// / wss://) or Server-Sent Events stream is
+    documented.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.pomelo.la
+      documented: true
+    - protocol: OAuth2
+      scheme: https
+      baseURL: https://auth.pomelo.la
+      note: client_credentials grant at /oauth/token returning a Bearer JWT.
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: >-
+        Outbound signed HTTPS POST callbacks to client endpoints for the
+        synchronous authorizer and for card/user/transaction/adjustment events.
+        Headers include x-endpoint, x-signature, and a timestamp. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Pomelo's API reference or guides as of the review date.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events stream is documented; real-time events are delivered as discrete HTTPS POST webhooks.
+  endpointsConfirmedRest:
+    - POST   https://auth.pomelo.la/oauth/token
+    - POST   https://api.pomelo.la/users/v1
+    - GET    https://api.pomelo.la/users/v1
+    - GET    https://api.pomelo.la/users/v1/{id}
+    - PATCH  https://api.pomelo.la/users/v1/{id}
+    - POST   https://api.pomelo.la/cards/v1
+    - GET    https://api.pomelo.la/cards/v1
+    - GET    https://api.pomelo.la/cards/v1/{id}
+    - PATCH  https://api.pomelo.la/cards/v1/{id}
+    - POST   https://api.pomelo.la/cards/v1/activation
+    - POST   https://api.pomelo.la/cards/v1/batches
+    - PATCH  https://api.pomelo.la/cards/v1/{id}/shipment
+    - GET    https://api.pomelo.la/accounts/v1
+    - GET    https://api.pomelo.la/accounts/v1/{id}
+    - GET    https://api.pomelo.la/accounts/v1/{id}/movements
+    - GET    https://api.pomelo.la/transactions/v1
+    - GET    https://api.pomelo.la/transactions/v1/{id}
+    - POST   https://api.pomelo.la/transfers/v1
+    - GET    https://api.pomelo.la/transfers/v1
+    - GET    https://api.pomelo.la/transfers/v1/{id}
+  webhooksConfirmed:
+    - inbound-from-pomelo POST {client_endpoint} authorization (synchronous authorizer; signed approve/reject required)
+    - inbound-from-pomelo POST {client_endpoint} card / user / transaction / adjustment event notifications
+sources:
+  - url: https://developers.pomelo.la
+    type: Documentation
+    note: Developer portal; lists REST base and module guides. No WebSocket mentioned.
+  - url: https://developers.pomelo.la/en/api-reference
+    type: APIReference
+    note: All documented operations are HTTPS REST under api.pomelo.la.
+  - url: https://developers.pomelo.la/en/api-reference/general/authorization
+    type: APIReference
+    note: OAuth 2.0 client_credentials at /oauth/token returning Bearer JWT (expires_in 86400).
+  - url: https://developers.pomelo.la/en/api-reference/general/users
+    type: APIReference
+    note: Users API - create, get, search, modify, custom field mappings.
+  - url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+    type: APIReference
+    note: Cards API - create, get, update, activate, batches, shipment.
+  - url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+    type: APIReference
+    note: Transactions processing and summaries.
+  - url: https://developers.pomelo.la/guides/developers/webhooks
+    type: Documentation
+    note: Signed outbound HTTPS POST webhooks and the synchronous authorizer; no WebSocket/SSE.
+  - url: https://github.com/pomelo-la
+    type: GitHubOrganization
+    note: Pomelo GitHub org (e.g. examples-android-tokenization), confirms pomelo.la identity.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No Pomelo-originated streaming surface exists. Real-time card authorization
+    and event delivery are collaborative synchronous/asynchronous HTTPS POST
+    webhooks to client-hosted endpoints, captured in apis.yml as the
+    Authorizations and Webhooks sub-APIs and documented in this review under
+    transports and webhooksConfirmed. No AsyncAPI document was authored because
+    there is no WebSocket or SSE channel to model.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

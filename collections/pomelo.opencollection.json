@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pomelo API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authentication", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Obtain an OAuth 2.0 access token", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://auth.pomelo.la/oauth/token",
+            "body": { "type": "json", "data": "{\"client_id\":\"<string>\",\"client_secret\":\"<string>\",\"audience\":\"https://api.pomelo.la\",\"grant_type\":\"client_credentials\"}" }
+          },
+          "docs": "Exchange client credentials for a Bearer JWT via the client_credentials grant."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Users", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a user", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.pomelo.la/users/v1", "body": { "type": "json", "data": "{}" } },
+          "docs": "Register a new cardholder. Email uniquely identifies the user."
+        },
+        {
+          "info": { "name": "Search users", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/users/v1" },
+          "docs": "Query the user database by identification, email, or status."
+        },
+        {
+          "info": { "name": "Get a user", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/users/v1/{id}" },
+          "docs": "Retrieve a user by id."
+        },
+        {
+          "info": { "name": "Modify a user", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.pomelo.la/users/v1/{id}", "body": { "type": "json", "data": "{}" } },
+          "docs": "Update existing personal information for a user."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Cards", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a card", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.pomelo.la/cards/v1", "body": { "type": "json", "data": "{}" } },
+          "docs": "Create a nominated physical or virtual card for a user."
+        },
+        {
+          "info": { "name": "Search cards", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/cards/v1" },
+          "docs": "Search cards by user or status."
+        },
+        {
+          "info": { "name": "Get a card", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/cards/v1/{id}" },
+          "docs": "Retrieve a card by id."
+        },
+        {
+          "info": { "name": "Update a card", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.pomelo.la/cards/v1/{id}", "body": { "type": "json", "data": "{}" } },
+          "docs": "Update the status, affinity group, or PIN of a card."
+        },
+        {
+          "info": { "name": "Activate a physical card", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.pomelo.la/cards/v1/activation", "body": { "type": "json", "data": "{}" } },
+          "docs": "Activate a physical card and optionally set its PIN."
+        },
+        {
+          "info": { "name": "Create a batch of innominated cards", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.pomelo.la/cards/v1/batches", "body": { "type": "json", "data": "{}" } },
+          "docs": "Create a batch of up to 1,000 innominated cards."
+        },
+        {
+          "info": { "name": "Update a card shipment address", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.pomelo.la/cards/v1/{id}/shipment", "body": { "type": "json", "data": "{}" } },
+          "docs": "Update the shipping address of a physical nominated card in CREATED status."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Card Accounts", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Search card accounts", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/accounts/v1" },
+          "docs": "Search card accounts by user."
+        },
+        {
+          "info": { "name": "Get a card account", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/accounts/v1/{id}" },
+          "docs": "Retrieve a card account and its balance."
+        },
+        {
+          "info": { "name": "List account movements", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/accounts/v1/{id}/movements" },
+          "docs": "List balance movements and activities for a card account."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Transactions", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Search transactions", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/transactions/v1" },
+          "docs": "Search processed card transactions by user, card, date range, or status."
+        },
+        {
+          "info": { "name": "Get a transaction", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/transactions/v1/{id}" },
+          "docs": "Retrieve a transaction by id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Transfers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a transfer", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.pomelo.la/transfers/v1", "body": { "type": "json", "data": "{}" } },
+          "docs": "Move funds between card accounts to fund or reconcile the program."
+        },
+        {
+          "info": { "name": "Search transfers", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/transfers/v1" },
+          "docs": "Search transfers."
+        },
+        {
+          "info": { "name": "Get a transfer", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.pomelo.la/transfers/v1/{id}" },
+          "docs": "Retrieve a transfer by id."
+        }
+      ]
+    }
+  ]
+}

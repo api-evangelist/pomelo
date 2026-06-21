@@ -1,0 +1,114 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Pomelo
+providerId: pomelo
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Fintech
+- Card Issuing
+- Embedded Finance
+- Payments
+- Latin America
+- Plans
+description: >-
+  Pomelo (pomelo.la) sells its card-issuing and embedded-finance platform
+  through a sales-led, contract-based model rather than self-serve public
+  pricing. Commercial terms - per-card / per-account fees, interchange share,
+  transaction and authorization processing fees, BIN sponsorship, FX, and KYC/KYB
+  verification costs - are negotiated per program and are not published. Access
+  starts with a sandbox; production requires a signed agreement and program
+  approval. The entries below describe the documented billing surfaces; specific
+  rates are not reconciled.
+notes: >-
+  No public price list is published. Values shown are billing dimensions, not
+  confirmed amounts; verify all figures directly with Pomelo sales during
+  reconciliation.
+sources:
+- https://www.pomelo.la
+- https://developers.pomelo.la
+plans:
+- id: pomelo-sandbox
+  name: Sandbox
+  type: free
+  description: >-
+    Free developer sandbox to integrate against the Users, Cards, Card Accounts,
+    Transactions, Transfers, and authorizer/webhook surfaces before going live.
+  entries:
+  - label: Sandbox Access
+    name: sandbox
+    type: flat
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: latam
+    unit: 1
+    price: $0 (no production card network access)
+    userMultiplied: false
+  elements:
+  - name: Users & KYC
+  - name: Cards
+  - name: Card Accounts
+  - name: Transactions
+  - name: Transfers
+  - name: Authorizer & Webhooks
+- id: pomelo-program
+  name: Issuing Program
+  type: enterprise
+  description: >-
+    Contract-based production program. Pricing is negotiated per program and
+    typically combines platform / per-card / per-account fees, transaction and
+    authorization processing fees, interchange arrangements, and KYC/KYB and FX
+    costs. Contact Pomelo sales.
+  entries:
+  - label: Platform & Program Fees
+    name: platform_fees
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: latam
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  - label: Card Issuance
+    name: card_issuance
+    type: usage
+    metric: cards
+    limit: -1
+    timeFrame: month
+    geo: latam
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  - label: Transaction Processing
+    name: transaction_processing
+    type: usage
+    metric: transactions
+    limit: -1
+    timeFrame: month
+    geo: latam
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  - label: KYC / KYB Verification
+    name: identity_verification
+    type: usage
+    metric: verifications
+    limit: -1
+    timeFrame: month
+    geo: latam
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: BIN Sponsorship
+  - name: Card Issuing
+  - name: Issuer Processing
+  - name: Banking-as-a-Service
+  - name: Credit Core
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

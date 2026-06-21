@@ -1,0 +1,79 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Pomelo
+providerId: pomelo
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Fintech
+- Card Issuing
+- Embedded Finance
+- Payments
+- Latin America
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Pomelo (pomelo.la) secures its REST API with OAuth 2.0 client-credentials
+  Bearer tokens and applies per-client protections against abuse. Public,
+  per-endpoint request quotas are not published; effective limits are set per
+  program. Operationally significant is the real-time authorizer: when Pomelo
+  POSTs an authorization to the client's endpoint, the client must validate the
+  signature and return a signed approve/reject response within the card network
+  time window, or the transaction is rejected. Bulk operations are bounded
+  (innominated card batches are capped at 1,000 cards each, with bulk batch
+  creation limited per request). Specific numeric per-endpoint limits are not
+  reconciled in this artifact.
+notes: >-
+  Verify per-program request quotas, authorizer response-time windows, and
+  pagination limits directly with Pomelo during reconciliation; values are
+  program-specific and not publicly published.
+sources:
+- https://developers.pomelo.la/en/api-reference/general/authorization
+- https://developers.pomelo.la/guides/developers/webhooks
+- https://developers.pomelo.la
+responseCodes:
+  throttled: 429
+limits:
+- name: API Requests
+  scope: client
+  metric: requests
+  limit: see provider documentation
+  notes: Per-client REST request limits are program-specific and not publicly published.
+- name: Authorizer Response Window
+  scope: transaction
+  metric: milliseconds
+  limit: card network time window
+  notes: >-
+    Synchronous authorizer callback must return a valid signed response within
+    the network-imposed window or the transaction is rejected.
+- name: Card Batch Size
+  scope: request
+  metric: cards
+  limit: 1000
+  notes: Maximum innominated cards per batch via POST /cards/v1/batches.
+- name: Bulk Batches
+  scope: request
+  metric: batches
+  limit: 15
+  notes: Up to 15 batches (1,000 cards each) per bulk batch-creation request.
+- name: Pagination
+  scope: request
+  metric: items
+  limit: see provider documentation
+  notes: List endpoints are paginated via page[size] and page[number].
+policies:
+- name: Signed Authorizer Responses
+  description: >-
+    Clients must validate the inbound signature and sign the response body with
+    the timestamp and response endpoint using their api-secret; mismatched or
+    expired signatures cause the transaction to be rejected.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+- name: Idempotency
+  description: Use idempotency keys on create operations to avoid duplicate cards, users, or transfers on retries.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

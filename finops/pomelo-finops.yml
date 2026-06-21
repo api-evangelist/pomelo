@@ -1,0 +1,116 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Pomelo
+providerId: pomelo
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Fintech
+- Card Issuing
+- Embedded Finance
+- Payments
+- Latin America
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of a Pomelo (pomelo.la) card-issuing program. Pomelo bills through
+  negotiated, contract-based terms rather than public usage rates, so spend
+  typically blends platform / program fees with per-card and per-account fees,
+  transaction and authorization processing fees, interchange arrangements,
+  KYC/KYB verification costs, FX, and BIN sponsorship. The meters below describe
+  the cost drivers a program should track; specific rates are negotiated and not
+  reconciled here.
+notes: >-
+  Pomelo does not publish unit rates; all amounts are program-specific. Verify
+  cost drivers and rates against the signed agreement during reconciliation.
+sources:
+- https://www.pomelo.la
+- https://developers.pomelo.la
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Pomelo
+serviceCategory: Financial Services
+billingModel:
+  pricingCategory: Contract-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Pomelo Card Issuing Platform
+  ServiceCategory: Financial Services
+  ProviderName: Pomelo
+  PublisherName: Pomelo
+  InvoiceIssuerName: Pomelo
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Contract-Based
+meters:
+- name: cards_issued
+  description: Physical and virtual cards issued, billed per card per program terms.
+  unit: cards
+  aggregation: sum
+  dimensions:
+  - program
+  - card_type
+- name: active_accounts
+  description: Active card accounts under management, billed per account.
+  unit: accounts
+  aggregation: sum
+  dimensions:
+  - program
+- name: transactions_processed
+  description: Card transactions processed (purchases, withdrawals, refunds, reversals).
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - program
+  - type
+- name: authorizations
+  description: Real-time authorization requests routed through the authorizer.
+  unit: authorizations
+  aggregation: sum
+  dimensions:
+  - program
+- name: identity_verifications
+  description: KYC / KYB identity verification sessions performed during onboarding.
+  unit: verifications
+  aggregation: sum
+  dimensions:
+  - program
+  - kind
+- name: transfers
+  description: Fund transfers and settlements moved across card accounts.
+  unit: transfers
+  aggregation: sum
+  dimensions:
+  - program
+- name: fx_volume
+  description: Cross-border / FX transaction volume subject to currency-conversion fees.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - program
+  - currency
+principles:
+- name: Visibility
+  description: Reconcile Pomelo program invoices and the Transactions API; track per-card, per-account, and per-transaction cost drivers.
+- name: Allocation
+  description: Tag costs by program, affinity group, and card type; map interchange and processing fees to internal cost centers.
+- name: Optimization
+  description: Right-size physical vs virtual card mix, prune inactive accounts/cards, and minimize avoidable FX and reissuance costs.
+- name: Accountability
+  description: Assign program owners; review interchange share, processing fees, and KYC/KYB spend monthly against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

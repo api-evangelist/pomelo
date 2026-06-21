@@ -1,0 +1,250 @@
+{
+  "info": {
+    "name": "Pomelo API",
+    "description": "REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. OAuth 2.0 client-credentials Bearer auth against https://api.pomelo.la.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.pomelo.la"
+    },
+    {
+      "key": "authUrl",
+      "value": "https://auth.pomelo.la"
+    },
+    {
+      "key": "bearerToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Obtain an OAuth 2.0 access token",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{authUrl}}/oauth/token", "host": ["{{authUrl}}"], "path": ["oauth", "token"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\",\n  \"audience\": \"https://api.pomelo.la\",\n  \"grant_type\": \"client_credentials\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create a user",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/users/v1", "host": ["{{baseUrl}}"], "path": ["users", "v1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"identification_type\": \"DNI\",\n  \"identification_value\": \"<string>\",\n  \"birthdate\": \"1990-01-01\",\n  \"gender\": \"OTHER\",\n  \"email\": \"user@example.com\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"ARG\"\n  },\n  \"operation_country\": \"ARG\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Search users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/v1?email=user@example.com",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "v1"],
+              "query": [{ "key": "email", "value": "user@example.com" }]
+            }
+          }
+        },
+        {
+          "name": "Get a user",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/users/v1/:id", "host": ["{{baseUrl}}"], "path": ["users", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] }
+          }
+        },
+        {
+          "name": "Modify a user",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/users/v1/:id", "host": ["{{baseUrl}}"], "path": ["users", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"phone\": \"<string>\",\n  \"status\": \"ACTIVE\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cards",
+      "item": [
+        {
+          "name": "Create a card",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/cards/v1", "host": ["{{baseUrl}}"], "path": ["cards", "v1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"user_id\": \"<string>\",\n  \"affinity_group_id\": \"<string>\",\n  \"card_type\": \"VIRTUAL\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Search cards",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/cards/v1?user_id=<string>",
+              "host": ["{{baseUrl}}"],
+              "path": ["cards", "v1"],
+              "query": [{ "key": "user_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get a card",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/cards/v1/:id", "host": ["{{baseUrl}}"], "path": ["cards", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] }
+          }
+        },
+        {
+          "name": "Update a card",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/cards/v1/:id", "host": ["{{baseUrl}}"], "path": ["cards", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"BLOCKED\",\n  \"status_reason\": \"CLIENT_INTERNAL_REASON\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Activate a physical card",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/cards/v1/activation", "host": ["{{baseUrl}}"], "path": ["cards", "v1", "activation"] },
+            "body": { "mode": "raw", "raw": "{\n  \"card_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Create a batch of innominated cards",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/cards/v1/batches", "host": ["{{baseUrl}}"], "path": ["cards", "v1", "batches"] },
+            "body": { "mode": "raw", "raw": "{\n  \"affinity_group_id\": \"<string>\",\n  \"card_type\": \"PHYSICAL\",\n  \"quantity\": 1000\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Update a card shipment address",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/cards/v1/:id/shipment", "host": ["{{baseUrl}}"], "path": ["cards", "v1", ":id", "shipment"], "variable": [{ "key": "id", "value": "<string>" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"ARG\"\n  }\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Card Accounts",
+      "item": [
+        {
+          "name": "Search card accounts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/accounts/v1?user_id=<string>",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "v1"],
+              "query": [{ "key": "user_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get a card account",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/accounts/v1/:id", "host": ["{{baseUrl}}"], "path": ["accounts", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] }
+          }
+        },
+        {
+          "name": "List account movements",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/accounts/v1/:id/movements", "host": ["{{baseUrl}}"], "path": ["accounts", "v1", ":id", "movements"], "variable": [{ "key": "id", "value": "<string>" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Search transactions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/transactions/v1?card_id=<string>",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions", "v1"],
+              "query": [{ "key": "card_id", "value": "<string>" }]
+            }
+          }
+        },
+        {
+          "name": "Get a transaction",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/transactions/v1/:id", "host": ["{{baseUrl}}"], "path": ["transactions", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transfers",
+      "item": [
+        {
+          "name": "Create a transfer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/transfers/v1", "host": ["{{baseUrl}}"], "path": ["transfers", "v1"] },
+            "body": { "mode": "raw", "raw": "{\n  \"origin_account_id\": \"<string>\",\n  \"destination_account_id\": \"<string>\",\n  \"amount\": 100.0,\n  \"currency\": \"ARS\",\n  \"description\": \"<string>\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Search transfers",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/transfers/v1", "host": ["{{baseUrl}}"], "path": ["transfers", "v1"] }
+          }
+        },
+        {
+          "name": "Get a transfer",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/transfers/v1/:id", "host": ["{{baseUrl}}"], "path": ["transfers", "v1", ":id"], "variable": [{ "key": "id", "value": "<string>" }] }
+          }
+        }
+      ]
+    }
+  ]
+}
