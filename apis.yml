@@ -187,6 +187,10 @@ apis:
     cards, users, transactions, and adjustments, validated with the x-endpoint,
     x-signature, and timestamp headers.
 common:
+- type: Authentication
+  url: authentication/pomelo-authentication.yml
+- type: OAuthScopes
+  url: scopes/pomelo-scopes.yml
 - type: GitHubOrganization
   url: https://github.com/pomelo-la
 - type: LinkedIn

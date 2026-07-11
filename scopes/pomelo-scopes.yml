@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/pomelo-openapi.yml
+docs: https://developers.pomelo.la/en/api-reference/general/authorization
+note: Pomelo's OAuth 2.0 uses the client_credentials grant (client_id, client_secret,
+  audience only - no scope parameter), and while each API validates that the token's
+  internally granted scopes (e.g. arg:cards:get-card in token response examples) match
+  the required permissions, no public scopes reference is published
+  (https://developers.pomelo.la/en/api-reference/general/authorization).
+schemes:
+- name: oauth2
+  source: openapi/pomelo-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.pomelo.la/oauth/token
+scopes: []
