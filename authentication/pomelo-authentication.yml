@@ -1,0 +1,25 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/pomelo-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: OAuth 2.0 client-credentials access token issued by /oauth/token.
+  sources:
+  - openapi/pomelo-openapi.yml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.pomelo.la/oauth/token
+    scopes: 0
+  sources:
+  - openapi/pomelo-openapi.yml
