@@ -187,6 +187,8 @@ apis:
     cards, users, transactions, and adjustments, validated with the x-endpoint,
     x-signature, and timestamp headers.
 common:
+- type: AgenticAccess
+  url: agentic-access/pomelo-agentic-access.yml
 - type: DomainSecurity
   url: security/pomelo-domain-security.yml
 - type: Authentication
