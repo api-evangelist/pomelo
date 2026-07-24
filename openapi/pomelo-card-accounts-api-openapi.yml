@@ -1,0 +1,203 @@
+openapi: 3.0.1
+info:
+  title: Pomelo Authentication Card Accounts API
+  description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
+  termsOfService: https://www.pomelo.la
+  contact:
+    name: Pomelo Developers
+    url: https://developers.pomelo.la
+  version: '1.0'
+servers:
+- url: https://api.pomelo.la
+  description: Pomelo production API
+- url: https://auth.pomelo.la
+  description: Pomelo OAuth 2.0 token issuer
+security:
+- bearerAuth: []
+tags:
+- name: Card Accounts
+  description: Card account balances, activities, and movements.
+paths:
+  /accounts/v1:
+    get:
+      operationId: searchCardAccounts
+      tags:
+      - Card Accounts
+      summary: Search card accounts.
+      parameters:
+      - name: user_id
+        in: query
+        schema:
+          type: string
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/PageNumber'
+      responses:
+        '200':
+          description: Matching card accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAccountList'
+  /accounts/v1/{id}:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    get:
+      operationId: getCardAccount
+      tags:
+      - Card Accounts
+      summary: Get a card account.
+      responses:
+        '200':
+          description: The requested card account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAccountEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /accounts/v1/{id}/movements:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    get:
+      operationId: listAccountMovements
+      tags:
+      - Card Accounts
+      summary: List account movements.
+      description: List the balance movements and activities for a card account.
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/PageNumber'
+      responses:
+        '200':
+          description: Movements for the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovementList'
+components:
+  parameters:
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+    AccountId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
+  schemas:
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    Movement:
+      type: object
+      properties:
+        id:
+          type: string
+        account_id:
+          type: string
+        type:
+          type: string
+          enum:
+          - CREDIT
+          - DEBIT
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    CardAccountList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardAccount'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    MovementList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movement'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    CardAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        balance:
+          type: number
+          format: double
+        currency:
+          type: string
+          description: ISO 4217 currency code.
+        status:
+          type: string
+    CardAccountEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CardAccount'
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 client-credentials access token issued by /oauth/token.
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.pomelo.la/oauth/token
+          scopes: {}

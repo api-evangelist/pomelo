@@ -1,0 +1,254 @@
+openapi: 3.0.1
+info:
+  title: Pomelo Authentication Transactions API
+  description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
+  termsOfService: https://www.pomelo.la
+  contact:
+    name: Pomelo Developers
+    url: https://developers.pomelo.la
+  version: '1.0'
+servers:
+- url: https://api.pomelo.la
+  description: Pomelo production API
+- url: https://auth.pomelo.la
+  description: Pomelo OAuth 2.0 token issuer
+security:
+- bearerAuth: []
+tags:
+- name: Transactions
+  description: Processed transactions, summaries, and history.
+paths:
+  /transactions/v1:
+    get:
+      operationId: searchTransactions
+      tags:
+      - Transactions
+      summary: Search transactions.
+      description: Search processed card transactions by user, card, date range, or status.
+      parameters:
+      - name: user_id
+        in: query
+        schema:
+          type: string
+      - name: card_id
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          $ref: '#/components/schemas/TransactionStatus'
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/PageNumber'
+      responses:
+        '200':
+          description: Matching transactions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionList'
+  /transactions/v1/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getTransaction
+      tags:
+      - Transactions
+      summary: Get a transaction.
+      responses:
+        '200':
+          description: The requested transaction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        country_code:
+          type: string
+        type:
+          type: string
+          enum:
+          - PURCHASE
+          - WITHDRAWAL
+          - EXTRACASH
+          - BALANCE_INQUIRY
+          - REFUND
+          - PAYMENT
+          - REVERSAL
+          - ADJUSTMENT
+        point_type:
+          type: string
+          enum:
+          - POS
+          - ECOMMERCE
+          - ATM
+          - MOTO
+        entry_mode:
+          type: string
+          enum:
+          - MANUAL
+          - CHIP
+          - CONTACTLESS
+          - CREDENTIAL_ON_FILE
+          - OTHER
+        origin:
+          type: string
+          enum:
+          - DOMESTIC
+          - INTERNATIONAL
+        source:
+          type: string
+          enum:
+          - DOMESTIC
+          - INTERNATIONAL
+        local_date_time:
+          type: string
+          format: date-time
+        original_transaction_id:
+          type: string
+        user_id:
+          type: string
+        card_id:
+          type: string
+        amount:
+          $ref: '#/components/schemas/Amount'
+        merchant:
+          $ref: '#/components/schemas/Merchant'
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        status_detail:
+          type: string
+    TransactionStatus:
+      type: string
+      enum:
+      - APPROVED
+      - REJECTED
+      - REVERSED
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    Amount:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+        currency:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              amount:
+                type: number
+                format: double
+              currency:
+                type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    TransactionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    TransactionEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Transaction'
+    Merchant:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        mcc:
+          type: string
+        country:
+          type: string
+  parameters:
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 client-credentials access token issued by /oauth/token.
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.pomelo.la/oauth/token
+          scopes: {}

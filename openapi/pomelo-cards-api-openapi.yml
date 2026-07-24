@@ -1,0 +1,399 @@
+openapi: 3.0.1
+info:
+  title: Pomelo Authentication Cards API
+  description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
+  termsOfService: https://www.pomelo.la
+  contact:
+    name: Pomelo Developers
+    url: https://developers.pomelo.la
+  version: '1.0'
+servers:
+- url: https://api.pomelo.la
+  description: Pomelo production API
+- url: https://auth.pomelo.la
+  description: Pomelo OAuth 2.0 token issuer
+security:
+- bearerAuth: []
+tags:
+- name: Cards
+  description: Issuing and lifecycle of physical and virtual cards.
+paths:
+  /cards/v1:
+    post:
+      operationId: createCard
+      tags:
+      - Cards
+      summary: Create a card.
+      description: Create a new nominated card, which can be physical or virtual, for a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardRequest'
+      responses:
+        '201':
+          description: Card created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardEnvelope'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: searchCards
+      tags:
+      - Cards
+      summary: Search cards.
+      parameters:
+      - name: user_id
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          $ref: '#/components/schemas/CardStatus'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/PageNumber'
+      responses:
+        '200':
+          description: Matching cards.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardList'
+  /cards/v1/{id}:
+    parameters:
+    - $ref: '#/components/parameters/CardId'
+    get:
+      operationId: getCard
+      tags:
+      - Cards
+      summary: Get a card.
+      responses:
+        '200':
+          description: The requested card.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateCard
+      tags:
+      - Cards
+      summary: Update a card.
+      description: Update the status, affinity group, or PIN of a card.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardPatch'
+      responses:
+        '200':
+          description: Updated card.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /cards/v1/activation:
+    post:
+      operationId: activateCard
+      tags:
+      - Cards
+      summary: Activate a physical card.
+      description: Activate a physical card and optionally set its PIN.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardActivationRequest'
+      responses:
+        '200':
+          description: Card activated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardEnvelope'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /cards/v1/batches:
+    post:
+      operationId: createCardBatch
+      tags:
+      - Cards
+      summary: Create a batch of innominated cards.
+      description: Create a batch of innominated cards (maximum 1,000 cards per batch).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardBatchRequest'
+      responses:
+        '201':
+          description: Batch created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardBatchEnvelope'
+  /cards/v1/{id}/shipment:
+    parameters:
+    - $ref: '#/components/parameters/CardId'
+    patch:
+      operationId: updateCardShipment
+      tags:
+      - Cards
+      summary: Update a card shipment address.
+      description: Update the shipping address of a card. The card must be a physical nominated card with status CREATED.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentRequest'
+      responses:
+        '200':
+          description: Shipment updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardEnvelope'
+components:
+  parameters:
+    CardId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+  responses:
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Address:
+      type: object
+      properties:
+        street_name:
+          type: string
+        street_number:
+          type: string
+        zip_code:
+          type: string
+        city:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 alpha-3 country code.
+    CardList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    Card:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        product_type:
+          type: string
+          enum:
+          - PREPAID
+          - DEBIT
+          - CREDIT
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        status_detail:
+          type: string
+        shipment_id:
+          type: string
+        last_four:
+          type: string
+        provider:
+          type: string
+          enum:
+          - MASTERCARD
+          - VISA
+        start_date:
+          type: string
+          format: date
+    CardRequest:
+      type: object
+      required:
+      - user_id
+      - card_type
+      properties:
+        user_id:
+          type: string
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        previous_card_id:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+    CardStatus:
+      type: string
+      enum:
+      - CREATED
+      - ACTIVE
+      - BLOCKED
+      - DISABLED
+      - EMERGENCY
+    CardBatchRequest:
+      type: object
+      required:
+      - affinity_group_id
+      - quantity
+      properties:
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        quantity:
+          type: integer
+          maximum: 1000
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    CardEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Card'
+    CardActivationRequest:
+      type: object
+      required:
+      - card_id
+      properties:
+        card_id:
+          type: string
+        pin:
+          type: string
+    ShipmentRequest:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        external_tracking_id:
+          type: string
+    CardBatchEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            batch_id:
+              type: string
+            quantity:
+              type: integer
+            status:
+              type: string
+    CardPatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        status_reason:
+          type: string
+          example: CLIENT_INTERNAL_REASON
+        affinity_group_id:
+          type: string
+        pin:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 client-credentials access token issued by /oauth/token.
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.pomelo.la/oauth/token
+          scopes: {}

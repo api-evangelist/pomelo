@@ -1,0 +1,113 @@
+openapi: 3.0.1
+info:
+  title: Pomelo Authentication API
+  description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
+  termsOfService: https://www.pomelo.la
+  contact:
+    name: Pomelo Developers
+    url: https://developers.pomelo.la
+  version: '1.0'
+servers:
+- url: https://api.pomelo.la
+  description: Pomelo production API
+- url: https://auth.pomelo.la
+  description: Pomelo OAuth 2.0 token issuer
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: OAuth 2.0 client-credentials token issuance.
+paths:
+  /oauth/token:
+    post:
+      operationId: createToken
+      tags:
+      - Authentication
+      summary: Obtain an OAuth 2.0 access token.
+      description: Exchange client credentials for a Bearer access token (JWT) using the client_credentials grant. Issued against https://auth.pomelo.la. The same token is returned until it expires, after which a new one is issued.
+      servers:
+      - url: https://auth.pomelo.la
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '200':
+          description: A new or cached access token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT Bearer token.
+        scope:
+          type: string
+        expires_in:
+          type: integer
+          example: 86400
+        token_type:
+          type: string
+          example: Bearer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    TokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      - audience
+      - grant_type
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        audience:
+          type: string
+          example: https://api.pomelo.la
+        grant_type:
+          type: string
+          enum:
+          - client_credentials
+  responses:
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 client-credentials access token issued by /oauth/token.
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.pomelo.la/oauth/token
+          scopes: {}
