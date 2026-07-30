@@ -7,7 +7,20 @@ description: Pomelo (pomelo.la) is a Latin American card-issuing and embedded-fi
   physical and virtual cards, manage card accounts and balances, process and query
   transactions, move money with transfers and settlements, and authorize transactions
   in real time over a synchronous authorization webhook.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pomelo.png
 tags:
 - Fintech
 - Card Issuing
@@ -18,174 +31,186 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.19'
 apis:
-- aid: pomelo:pomelo-users-kyc-api
-  name: Pomelo Users & KYC API
-  tags:
-  - Users
-  - KYC
-  - KYB
-  - Identity
-  - Onboarding
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: pomelo:pomelo-authentication-api
+  name: Pomelo Authentication API
+  description: OAuth 2.0 client-credentials token issuance.
   humanURL: https://developers.pomelo.la/en/api-reference/general/users
   baseURL: https://api.pomelo.la
-  properties:
-  - url: https://developers.pomelo.la/guides
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference/general/users
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Register and manage end users (cardholders) and the identity verification
-    lifecycle - create, retrieve, search, and modify users, plus KYC and KYB sessions
-    for individuals and companies across operating countries.
-- aid: pomelo:pomelo-cards-api
-  name: Pomelo Cards API
   tags:
-  - Cards
-  - Issuing
-  - Physical
-  - Virtual
-  - Activation
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
-  baseURL: https://api.pomelo.la
+  - Authentication
   properties:
-  - url: https://developers.pomelo.la/guides/solutions/issuing/cards
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Create nominated and innominated physical or virtual cards, retrieve
-    and update card status, affinity group and PIN, activate physical cards, manage
-    batches of innominated cards, and update card shipment addresses.
+  - type: OpenAPI
+    url: openapi/pomelo-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://developers.pomelo.la/guides
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/general/users
+  - type: PostmanCollection
+    url: collections/pomelo.postman_collection.json
+  - type: OpenCollection
+    url: collections/pomelo.opencollection.json
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/processing/transactions
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/developers/webhooks
 - aid: pomelo:pomelo-card-accounts-api
   name: Pomelo Card Accounts API
+  description: Card account balances, activities, and movements.
+  humanURL: https://developers.pomelo.la/en/api-reference/general/users
+  baseURL: https://api.pomelo.la
   tags:
   - Card Accounts
-  - Balance
-  - Banking
-  - Movements
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.pomelo.la/en/api-reference
-  baseURL: https://api.pomelo.la
   properties:
-  - url: https://developers.pomelo.la/guides
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Manage prepaid/banking card accounts and their balances - query account
-    balances, activities, and movements that back the cards a program issues.
+  - type: OpenAPI
+    url: openapi/pomelo-card-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.pomelo.la/guides
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/general/users
+  - type: PostmanCollection
+    url: collections/pomelo.postman_collection.json
+  - type: OpenCollection
+    url: collections/pomelo.opencollection.json
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/processing/transactions
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/developers/webhooks
+- aid: pomelo:pomelo-cards-api
+  name: Pomelo Cards API
+  description: Issuing and lifecycle of physical and virtual cards.
+  humanURL: https://developers.pomelo.la/en/api-reference/general/users
+  baseURL: https://api.pomelo.la
+  tags:
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/pomelo-cards-api-openapi.yml
+  - type: Documentation
+    url: https://developers.pomelo.la/guides
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/general/users
+  - type: PostmanCollection
+    url: collections/pomelo.postman_collection.json
+  - type: OpenCollection
+    url: collections/pomelo.opencollection.json
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/processing/transactions
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/developers/webhooks
 - aid: pomelo:pomelo-transactions-api
   name: Pomelo Transactions API
+  description: Processed transactions, summaries, and history.
+  humanURL: https://developers.pomelo.la/en/api-reference/general/users
+  baseURL: https://api.pomelo.la
   tags:
   - Transactions
-  - Processing
-  - Settlement
-  - History
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
-  baseURL: https://api.pomelo.la
   properties:
-  - url: https://developers.pomelo.la/guides/solutions/processing/transactions
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Search and retrieve processed card transactions and summaries, including
-    purchases, refunds, reversals, and adjustments, with merchant, amount, status,
-    and entry-mode detail.
-- aid: pomelo:pomelo-authorizations-api
-  name: Pomelo Authorizations API
-  tags:
-  - Authorizations
-  - Authorizer
-  - Real Time
-  - Webhook
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
-  baseURL: https://api.pomelo.la
-  properties:
-  - url: https://developers.pomelo.la/guides/developers/webhooks
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Real-time authorizer - Pomelo POSTs each incoming card authorization
-    to the client's signed endpoint, which approves or rejects the transaction within
-    the network time window using a signed response.
+  - type: OpenAPI
+    url: openapi/pomelo-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.pomelo.la/guides
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/general/users
+  - type: PostmanCollection
+    url: collections/pomelo.postman_collection.json
+  - type: OpenCollection
+    url: collections/pomelo.opencollection.json
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/processing/transactions
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/developers/webhooks
 - aid: pomelo:pomelo-transfers-api
   name: Pomelo Transfers API
+  description: Money movement and settlements across card accounts.
+  humanURL: https://developers.pomelo.la/en/api-reference/general/users
+  baseURL: https://api.pomelo.la
   tags:
   - Transfers
-  - Money Movement
-  - Settlements
-  - Funding
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.pomelo.la/en/api-reference
-  baseURL: https://api.pomelo.la
   properties:
-  - url: https://developers.pomelo.la/guides
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Move funds across card accounts and settle program balances - create
-    and query transfers and settlements that fund and reconcile the issuing program.
-- aid: pomelo:pomelo-webhooks-api
-  name: Pomelo Webhooks API
+  - type: OpenAPI
+    url: openapi/pomelo-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.pomelo.la/guides
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/general/users
+  - type: PostmanCollection
+    url: collections/pomelo.postman_collection.json
+  - type: OpenCollection
+    url: collections/pomelo.opencollection.json
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/processing/transactions
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/developers/webhooks
+- aid: pomelo:pomelo-users-api
+  name: Pomelo Users API
+  description: Cardholder records and KYC/KYB identity verification.
+  humanURL: https://developers.pomelo.la/en/api-reference/general/users
+  baseURL: https://api.pomelo.la
   tags:
-  - Webhooks
-  - Events
-  - Notifications
-  - Signatures
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.pomelo.la/guides/developers/webhooks
-  baseURL: https://api.pomelo.la
+  - Users
   properties:
-  - url: https://developers.pomelo.la/guides/developers/webhooks
-    type: Documentation
-  - url: https://developers.pomelo.la/en/api-reference
-    type: APIReference
-  - url: openapi/pomelo-openapi.yml
-    type: OpenAPI
-  - url: collections/pomelo.postman_collection.json
-    type: PostmanCollection
-  - url: collections/pomelo.opencollection.json
-    type: OpenCollection
-  description: Configure HTTPS endpoints that receive signed event notifications for
-    cards, users, transactions, and adjustments, validated with the x-endpoint,
-    x-signature, and timestamp headers.
+  - type: OpenAPI
+    url: openapi/pomelo-users-api-openapi.yml
+  - type: Documentation
+    url: https://developers.pomelo.la/guides
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/general/users
+  - type: PostmanCollection
+    url: collections/pomelo.postman_collection.json
+  - type: OpenCollection
+    url: collections/pomelo.opencollection.json
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/issuing/cards
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/solutions/processing/transactions
+  - type: APIReference
+    url: https://developers.pomelo.la/en/api-reference/cards/processing/transactions
+  - type: Documentation
+    url: https://developers.pomelo.la/guides/developers/webhooks
 common:
 - type: AgenticAccess
   url: agentic-access/pomelo-agentic-access.yml
