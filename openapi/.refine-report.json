@@ -1,0 +1,24 @@
+{
+  "provider": "pomelo",
+  "sources": [
+    "pomelo-authentication-api-openapi.yml",
+    "pomelo-card-accounts-api-openapi.yml",
+    "pomelo-cards-api-openapi.yml",
+    "pomelo-transactions-api-openapi.yml",
+    "pomelo-transfers-api-openapi.yml",
+    "pomelo-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "pomelo-authentication-api-openapi.yml",
+    "pomelo-card-accounts-api-openapi.yml",
+    "pomelo-cards-api-openapi.yml",
+    "pomelo-transactions-api-openapi.yml",
+    "pomelo-transfers-api-openapi.yml",
+    "pomelo-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
