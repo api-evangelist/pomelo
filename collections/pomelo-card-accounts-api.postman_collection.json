@@ -1,0 +1,415 @@
+{
+  "item": [
+    {
+      "id": "49693c47-59f4-494f-9932-4559f53ae5ec",
+      "name": "Card Accounts",
+      "description": {
+        "content": "Card account balances, activities, and movements.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c861bfbe-b829-4e56-a13d-d842b5795283",
+          "name": "Search card accounts.",
+          "request": {
+            "name": "Search card accounts.",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "555bb1ce-10dc-40e5-9bbe-107679ba1eb7",
+              "name": "Matching card accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"balance\": 8660.90176640088,\n      \"currency\": \"string\",\n      \"status\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"balance\": 7892.00508832455,\n      \"currency\": \"string\",\n      \"status\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"page_size\": 194,\n      \"page_number\": 669,\n      \"total_pages\": 7784,\n      \"total_elements\": 5523\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb189741-0c7e-44ff-b190-14cff4815ff0",
+          "name": "Get a card account.",
+          "request": {
+            "name": "Get a card account.",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                "v1",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9580aa47-b79d-4465-9e83-ba7028926285",
+              "name": "The requested card account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"user_id\": \"string\",\n    \"balance\": 7477.2479656236455,\n    \"currency\": \"string\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b60892b8-8a9d-47a8-b6a0-bbe6295e359f",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27c29762-550a-4925-b137-d7dca67cd681",
+          "name": "List account movements.",
+          "request": {
+            "name": "List account movements.",
+            "description": {
+              "content": "List the balance movements and activities for a card account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                "v1",
+                ":id",
+                "movements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "0"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e2f0da1-9ed4-4852-be67-dd49541cebd4",
+              "name": "Movements for the account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    "v1",
+                    ":id",
+                    "movements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[size]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"account_id\": \"string\",\n      \"type\": \"CREDIT\",\n      \"amount\": 6323.317053619624,\n      \"currency\": \"string\",\n      \"created_at\": \"2002-09-30T15:54:19.114Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"account_id\": \"string\",\n      \"type\": \"CREDIT\",\n      \"amount\": 8308.888226300556,\n      \"currency\": \"string\",\n      \"created_at\": \"1960-04-22T05:33:10.135Z\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"page_size\": 3671,\n      \"page_number\": 6643,\n      \"total_pages\": 4570,\n      \"total_elements\": 3793\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pomelo.la",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "10f0adc9-b453-4502-bd9b-e4feb64aafe2",
+    "name": "Pomelo Authentication Card Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.\n\nContact Support:\n Name: Pomelo Developers",
+      "type": "text/plain"
+    }
+  }
+}

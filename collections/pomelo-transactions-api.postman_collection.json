@@ -1,0 +1,334 @@
+{
+  "item": [
+    {
+      "id": "3d81e3a4-b87d-47b7-aa7f-78cab4b299d6",
+      "name": "Transactions",
+      "description": {
+        "content": "Processed transactions, summaries, and history.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6f59833d-6941-4e12-98b2-9dba9a520859",
+          "name": "Search transactions.",
+          "request": {
+            "name": "Search transactions.",
+            "description": {
+              "content": "Search processed card transactions by user, card, date range, or status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "transactions",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "card_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cda74ed8-4895-4cb3-bca9-c7b2da4e837f",
+              "name": "Matching transactions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactions",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "card_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"country_code\": \"string\",\n      \"type\": \"PURCHASE\",\n      \"point_type\": \"POS\",\n      \"entry_mode\": \"CONTACTLESS\",\n      \"origin\": \"DOMESTIC\",\n      \"source\": \"DOMESTIC\",\n      \"local_date_time\": \"1967-04-23T19:42:57.503Z\",\n      \"original_transaction_id\": \"string\",\n      \"user_id\": \"string\",\n      \"card_id\": \"string\",\n      \"amount\": {\n        \"total\": 159.82199673875817,\n        \"currency\": \"string\",\n        \"details\": [\n          {\n            \"type\": \"string\",\n            \"amount\": 4928.482948998454,\n            \"currency\": \"string\"\n          },\n          {\n            \"type\": \"string\",\n            \"amount\": 3870.194591210623,\n            \"currency\": \"string\"\n          }\n        ]\n      },\n      \"merchant\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"mcc\": \"string\",\n        \"country\": \"string\"\n      },\n      \"status\": \"<string>\",\n      \"status_detail\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"country_code\": \"string\",\n      \"type\": \"PURCHASE\",\n      \"point_type\": \"ATM\",\n      \"entry_mode\": \"CONTACTLESS\",\n      \"origin\": \"INTERNATIONAL\",\n      \"source\": \"INTERNATIONAL\",\n      \"local_date_time\": \"2017-11-25T11:19:19.180Z\",\n      \"original_transaction_id\": \"string\",\n      \"user_id\": \"string\",\n      \"card_id\": \"string\",\n      \"amount\": {\n        \"total\": 8751.20615284913,\n        \"currency\": \"string\",\n        \"details\": [\n          {\n            \"type\": \"string\",\n            \"amount\": 1159.4354253967608,\n            \"currency\": \"string\"\n          },\n          {\n            \"type\": \"string\",\n            \"amount\": 1440.0983168579517,\n            \"currency\": \"string\"\n          }\n        ]\n      },\n      \"merchant\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"mcc\": \"string\",\n        \"country\": \"string\"\n      },\n      \"status\": \"<string>\",\n      \"status_detail\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"page_size\": 3853,\n      \"page_number\": 5430,\n      \"total_pages\": 159,\n      \"total_elements\": 3755\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd8e13a3-e7c4-46ce-b867-c3dc175bb529",
+          "name": "Get a transaction.",
+          "request": {
+            "name": "Get a transaction.",
+            "description": {},
+            "url": {
+              "path": [
+                "transactions",
+                "v1",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "803ae907-f606-4e31-b011-db55bb1332fa",
+              "name": "The requested transaction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactions",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"country_code\": \"string\",\n    \"type\": \"EXTRACASH\",\n    \"point_type\": \"MOTO\",\n    \"entry_mode\": \"CONTACTLESS\",\n    \"origin\": \"INTERNATIONAL\",\n    \"source\": \"INTERNATIONAL\",\n    \"local_date_time\": \"1985-08-11T22:57:02.312Z\",\n    \"original_transaction_id\": \"string\",\n    \"user_id\": \"string\",\n    \"card_id\": \"string\",\n    \"amount\": {\n      \"total\": 4925.083516724921,\n      \"currency\": \"string\",\n      \"details\": [\n        {\n          \"type\": \"string\",\n          \"amount\": 3823.5306492907016,\n          \"currency\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"amount\": 663.1047352453545,\n          \"currency\": \"string\"\n        }\n      ]\n    },\n    \"merchant\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"mcc\": \"string\",\n      \"country\": \"string\"\n    },\n    \"status\": \"<string>\",\n    \"status_detail\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "640373b5-a472-4ff1-b1b4-5b63f766b621",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "transactions",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pomelo.la",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6ddbf11b-b3f3-4234-9853-91bf7432b2dc",
+    "name": "Pomelo Authentication Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.\n\nContact Support:\n Name: Pomelo Developers",
+      "type": "text/plain"
+    }
+  }
+}

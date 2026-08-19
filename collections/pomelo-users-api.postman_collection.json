@@ -1,0 +1,766 @@
+{
+  "item": [
+    {
+      "id": "09beefef-ef81-4d13-afdf-6f589bd4da02",
+      "name": "Users",
+      "description": {
+        "content": "Cardholder records and KYC/KYB identity verification.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "60239dbd-d7c4-43a3-aceb-eb063b2df7f5",
+          "name": "Create a user.",
+          "request": {
+            "name": "Create a user.",
+            "description": {
+              "content": "Register a new cardholder. An email uniquely identifies the user on the platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"email\": \"<email>\",\n  \"operation_country\": \"<string>\",\n  \"identification_type\": \"<string>\",\n  \"identification_value\": \"<string>\",\n  \"birthdate\": \"<date>\",\n  \"gender\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e51e2702-6c41-47ea-8ff3-75fb5c9d1b87",
+              "name": "User created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"email\": \"<email>\",\n  \"operation_country\": \"<string>\",\n  \"identification_type\": \"DNI\",\n  \"identification_value\": \"<string>\",\n  \"birthdate\": \"<date>\",\n  \"gender\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"name\": \"<string>\",\n    \"surname\": \"<string>\",\n    \"email\": \"<email>\",\n    \"operation_country\": \"<string>\",\n    \"identification_type\": \"DNI\",\n    \"identification_value\": \"<string>\",\n    \"birthdate\": \"<date>\",\n    \"gender\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"legal_address\": {\n      \"street_name\": \"<string>\",\n      \"street_number\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"id\": \"string\",\n    \"status\": \"DISABLED\",\n    \"created_at\": \"2005-02-15T23:39:27.039Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3468896c-9f65-461f-8f5d-0b5b27225ac6",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"email\": \"<email>\",\n  \"operation_country\": \"<string>\",\n  \"identification_type\": \"DNI\",\n  \"identification_value\": \"<string>\",\n  \"birthdate\": \"<date>\",\n  \"gender\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "698a0582-f849-49fd-b31d-60088e952e41",
+              "name": "Missing or invalid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"email\": \"<email>\",\n  \"operation_country\": \"<string>\",\n  \"identification_type\": \"DNI\",\n  \"identification_value\": \"<string>\",\n  \"birthdate\": \"<date>\",\n  \"gender\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80c1025a-f594-41c2-b1b0-0cd11bb8b8a0",
+          "name": "Search users.",
+          "request": {
+            "name": "Search users.",
+            "description": {
+              "content": "Query the user database by parameters such as identification, email, or status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identification_value",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dccdd26d-b058-4454-8087-9a3427457bd5",
+              "name": "Matching users.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identification_value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"surname\": \"<string>\",\n      \"email\": \"<email>\",\n      \"operation_country\": \"<string>\",\n      \"identification_type\": \"DNI\",\n      \"identification_value\": \"<string>\",\n      \"birthdate\": \"<date>\",\n      \"gender\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"legal_address\": {\n        \"street_name\": \"<string>\",\n        \"street_number\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"city\": \"<string>\",\n        \"region\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"id\": \"string\",\n      \"status\": \"<string>\",\n      \"created_at\": \"2018-01-15T16:51:56.296Z\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"surname\": \"<string>\",\n      \"email\": \"<email>\",\n      \"operation_country\": \"<string>\",\n      \"identification_type\": \"DNI\",\n      \"identification_value\": \"<string>\",\n      \"birthdate\": \"<date>\",\n      \"gender\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"legal_address\": {\n        \"street_name\": \"<string>\",\n        \"street_number\": \"<string>\",\n        \"zip_code\": \"<string>\",\n        \"city\": \"<string>\",\n        \"region\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"id\": \"string\",\n      \"status\": \"<string>\",\n      \"created_at\": \"1990-04-04T08:51:39.396Z\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"page_size\": 276,\n      \"page_number\": 363,\n      \"total_pages\": 6789,\n      \"total_elements\": 3588\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3ffea0c-5ec4-47fe-8ca9-6473da2f9c46",
+              "name": "Missing or invalid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identification_value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c675889d-e50f-4832-96be-4f705140d903",
+          "name": "Get a user.",
+          "request": {
+            "name": "Get a user.",
+            "description": {},
+            "url": {
+              "path": [
+                "users",
+                "v1",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b6fb0dc-1806-4c32-a484-6dd70e1f2a9e",
+              "name": "The requested user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"name\": \"<string>\",\n    \"surname\": \"<string>\",\n    \"email\": \"<email>\",\n    \"operation_country\": \"<string>\",\n    \"identification_type\": \"DNI\",\n    \"identification_value\": \"<string>\",\n    \"birthdate\": \"<date>\",\n    \"gender\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"legal_address\": {\n      \"street_name\": \"<string>\",\n      \"street_number\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"id\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"1955-08-04T09:26:48.490Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f683659-8021-4d47-817a-ad3d08236b47",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6a7699f-b56b-4665-80e6-423b7b7f0591",
+          "name": "Modify a user.",
+          "request": {
+            "name": "Modify a user.",
+            "description": {
+              "content": "Update existing personal information for a user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "v1",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d3694c6-b110-46e6-a227-fd998f9f4bee",
+              "name": "Updated user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"name\": \"<string>\",\n    \"surname\": \"<string>\",\n    \"email\": \"<email>\",\n    \"operation_country\": \"<string>\",\n    \"identification_type\": \"DNI\",\n    \"identification_value\": \"<string>\",\n    \"birthdate\": \"<date>\",\n    \"gender\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"legal_address\": {\n      \"street_name\": \"<string>\",\n      \"street_number\": \"<string>\",\n      \"zip_code\": \"<string>\",\n      \"city\": \"<string>\",\n      \"region\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"id\": \"string\",\n    \"status\": \"<string>\",\n    \"created_at\": \"1955-08-04T09:26:48.490Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8126ae9-6a9a-4976-84bb-fba89ea8525f",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"legal_address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pomelo.la",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e21fd3c7-25b3-48d7-8f82-bdba5bc8adc1",
+    "name": "Pomelo Authentication Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.\n\nContact Support:\n Name: Pomelo Developers",
+      "type": "text/plain"
+    }
+  }
+}

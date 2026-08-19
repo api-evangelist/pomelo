@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pomelo Authentication Cards API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search cards.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pomelo.la/cards/v1",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search cards."
+        },
+        {
+          "info": {
+            "name": "Create a card.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pomelo.la/cards/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new nominated card, which can be physical or virtual, for a user."
+        },
+        {
+          "info": {
+            "name": "Get a card.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pomelo.la/cards/v1/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a card."
+        },
+        {
+          "info": {
+            "name": "Update a card.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.pomelo.la/cards/v1/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the status, affinity group, or PIN of a card."
+        },
+        {
+          "info": {
+            "name": "Activate a physical card.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pomelo.la/cards/v1/activation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate a physical card and optionally set its PIN."
+        },
+        {
+          "info": {
+            "name": "Create a batch of innominated cards.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.pomelo.la/cards/v1/batches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a batch of innominated cards (maximum 1,000 cards per batch)."
+        },
+        {
+          "info": {
+            "name": "Update a card shipment address.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.pomelo.la/cards/v1/:id/shipment",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the shipping address of a card. The card must be a physical nominated card with status CREATED."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

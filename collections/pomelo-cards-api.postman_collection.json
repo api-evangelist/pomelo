@@ -1,0 +1,1069 @@
+{
+  "item": [
+    {
+      "id": "24899716-1628-49d9-9370-c2c41ef2965f",
+      "name": "Cards",
+      "description": {
+        "content": "Issuing and lifecycle of physical and virtual cards.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e7a39a6b-9a98-46c1-9a26-3abcd48e4253",
+          "name": "Create a card.",
+          "request": {
+            "name": "Create a card.",
+            "description": {
+              "content": "Create a new nominated card, which can be physical or virtual, for a user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"card_type\": \"<string>\",\n  \"affinity_group_id\": \"<string>\",\n  \"previous_card_id\": \"<string>\",\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b5d4bf19-6f0a-405a-bd4a-cec6eebde39d",
+              "name": "Card created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"card_type\": \"<string>\",\n  \"affinity_group_id\": \"<string>\",\n  \"previous_card_id\": \"<string>\",\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"user_id\": \"string\",\n    \"affinity_group_id\": \"string\",\n    \"card_type\": \"PHYSICAL\",\n    \"product_type\": \"DEBIT\",\n    \"status\": \"BLOCKED\",\n    \"status_detail\": \"string\",\n    \"shipment_id\": \"string\",\n    \"last_four\": \"string\",\n    \"provider\": \"VISA\",\n    \"start_date\": \"2010-09-30\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf813e00-e7b1-4403-9b62-58a758ecf2f9",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"card_type\": \"<string>\",\n  \"affinity_group_id\": \"<string>\",\n  \"previous_card_id\": \"<string>\",\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a81c5226-8124-4594-8ed4-276b35a2cdad",
+              "name": "Missing or invalid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"card_type\": \"<string>\",\n  \"affinity_group_id\": \"<string>\",\n  \"previous_card_id\": \"<string>\",\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33b33cfb-e33d-4bd4-97ea-4139d4482470",
+          "name": "Search cards.",
+          "request": {
+            "name": "Search cards.",
+            "description": {},
+            "url": {
+              "path": [
+                "cards",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94fae77a-9979-47a6-bcf7-f763a870fc87",
+              "name": "Matching cards.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"affinity_group_id\": \"string\",\n      \"card_type\": \"VIRTUAL\",\n      \"product_type\": \"DEBIT\",\n      \"status\": \"<string>\",\n      \"status_detail\": \"string\",\n      \"shipment_id\": \"string\",\n      \"last_four\": \"string\",\n      \"provider\": \"MASTERCARD\",\n      \"start_date\": \"1948-12-22\"\n    },\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"affinity_group_id\": \"string\",\n      \"card_type\": \"VIRTUAL\",\n      \"product_type\": \"DEBIT\",\n      \"status\": \"<string>\",\n      \"status_detail\": \"string\",\n      \"shipment_id\": \"string\",\n      \"last_four\": \"string\",\n      \"provider\": \"MASTERCARD\",\n      \"start_date\": \"2016-10-02\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"page_size\": 5590,\n      \"page_number\": 4084,\n      \"total_pages\": 4999,\n      \"total_elements\": 9296\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58ca524e-6096-4410-8575-ed1bb60599ae",
+          "name": "Get a card.",
+          "request": {
+            "name": "Get a card.",
+            "description": {},
+            "url": {
+              "path": [
+                "cards",
+                "v1",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b9de183-f6d2-44c2-be69-80fdf5528e1b",
+              "name": "The requested card.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"user_id\": \"string\",\n    \"affinity_group_id\": \"string\",\n    \"card_type\": \"VIRTUAL\",\n    \"product_type\": \"DEBIT\",\n    \"status\": \"<string>\",\n    \"status_detail\": \"string\",\n    \"shipment_id\": \"string\",\n    \"last_four\": \"string\",\n    \"provider\": \"VISA\",\n    \"start_date\": \"2005-01-12\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86d755ed-27a1-4b1a-b3f7-4d7c7fbe43f6",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4492df82-2d03-45c4-b76f-c60ad6454ec9",
+          "name": "Update a card.",
+          "request": {
+            "name": "Update a card.",
+            "description": {
+              "content": "Update the status, affinity group, or PIN of a card.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                "v1",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\",\n  \"status_reason\": \"<string>\",\n  \"affinity_group_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4686ef40-4e20-47fd-a525-d6a7990ffd6d",
+              "name": "Updated card.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\",\n  \"status_reason\": \"CLIENT_INTERNAL_REASON\",\n  \"affinity_group_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"user_id\": \"string\",\n    \"affinity_group_id\": \"string\",\n    \"card_type\": \"VIRTUAL\",\n    \"product_type\": \"DEBIT\",\n    \"status\": \"<string>\",\n    \"status_detail\": \"string\",\n    \"shipment_id\": \"string\",\n    \"last_four\": \"string\",\n    \"provider\": \"VISA\",\n    \"start_date\": \"2005-01-12\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bbabebe-c02f-45fc-b1a7-b56a0ec7c8d6",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\",\n  \"status_reason\": \"CLIENT_INTERNAL_REASON\",\n  \"affinity_group_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d287ef7-5fad-493e-a69a-46380a5aa277",
+          "name": "Activate a physical card.",
+          "request": {
+            "name": "Activate a physical card.",
+            "description": {
+              "content": "Activate a physical card and optionally set its PIN.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                "v1",
+                "activation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e2098a0e-f8d2-49bb-8133-f680a18b533c",
+              "name": "Card activated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    "activation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"card_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"user_id\": \"string\",\n    \"affinity_group_id\": \"string\",\n    \"card_type\": \"VIRTUAL\",\n    \"product_type\": \"DEBIT\",\n    \"status\": \"<string>\",\n    \"status_detail\": \"string\",\n    \"shipment_id\": \"string\",\n    \"last_four\": \"string\",\n    \"provider\": \"VISA\",\n    \"start_date\": \"2005-01-12\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8de9c83b-60e0-4d55-a237-982f7f063022",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    "activation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"card_id\": \"<string>\",\n  \"pin\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"detail\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b22bc39-9026-4e6a-90b9-937d037538c8",
+          "name": "Create a batch of innominated cards.",
+          "request": {
+            "name": "Create a batch of innominated cards.",
+            "description": {
+              "content": "Create a batch of innominated cards (maximum 1,000 cards per batch).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                "v1",
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"affinity_group_id\": \"<string>\",\n  \"quantity\": \"<integer>\",\n  \"card_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c3668190-5b6f-4037-a0dd-8b06e62eb16f",
+              "name": "Batch created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affinity_group_id\": \"<string>\",\n  \"quantity\": \"<integer>\",\n  \"card_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"batch_id\": \"string\",\n    \"quantity\": 1552,\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2973774a-08b1-4fee-8ef9-022495c5e80e",
+          "name": "Update a card shipment address.",
+          "request": {
+            "name": "Update a card shipment address.",
+            "description": {
+              "content": "Update the shipping address of a card. The card must be a physical nominated card with status CREATED.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cards",
+                "v1",
+                ":id",
+                "shipment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"external_tracking_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "51f04a5f-0dc9-4d95-8bdf-79daf30f9e68",
+              "name": "Shipment updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cards",
+                    "v1",
+                    ":id",
+                    "shipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": {\n    \"street_name\": \"<string>\",\n    \"street_number\": \"<string>\",\n    \"zip_code\": \"<string>\",\n    \"city\": \"<string>\",\n    \"region\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"external_tracking_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"user_id\": \"string\",\n    \"affinity_group_id\": \"string\",\n    \"card_type\": \"VIRTUAL\",\n    \"product_type\": \"DEBIT\",\n    \"status\": \"<string>\",\n    \"status_detail\": \"string\",\n    \"shipment_id\": \"string\",\n    \"last_four\": \"string\",\n    \"provider\": \"VISA\",\n    \"start_date\": \"2005-01-12\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.pomelo.la",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0735b3c0-6961-41a3-b599-867b206e70e7",
+    "name": "Pomelo Authentication Cards API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.\n\nContact Support:\n Name: Pomelo Developers",
+      "type": "text/plain"
+    }
+  }
+}

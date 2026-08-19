@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pomelo Authentication Card Accounts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Card Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search card accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pomelo.la/accounts/v1",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search card accounts."
+        },
+        {
+          "info": {
+            "name": "Get a card account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pomelo.la/accounts/v1/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a card account."
+        },
+        {
+          "info": {
+            "name": "List account movements.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.pomelo.la/accounts/v1/:id/movements",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List the balance movements and activities for a card account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
