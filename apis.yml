@@ -127,6 +127,8 @@ apis:
   humanURL: https://developers.pomelo.la/en/api-reference/general/users
   baseURL: https://api.pomelo.la
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -187,6 +189,8 @@ apis:
   humanURL: https://developers.pomelo.la/en/api-reference/general/users
   baseURL: https://api.pomelo.la
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
