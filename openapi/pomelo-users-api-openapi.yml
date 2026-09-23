@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Pomelo Authentication Users API
+  title: Pomelo Users API
   description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
   termsOfService: https://www.pomelo.la
   contact:
@@ -23,7 +23,7 @@ paths:
       operationId: createUser
       tags:
       - Users
-      summary: Create a user.
+      summary: Create a user
       description: Register a new cardholder. An email uniquely identifies the user on the platform.
       requestBody:
         required: true
@@ -46,7 +46,7 @@ paths:
       operationId: searchUsers
       tags:
       - Users
-      summary: Search users.
+      summary: Search users
       description: Query the user database by parameters such as identification, email, or status.
       parameters:
       - name: identification_value
@@ -80,7 +80,7 @@ paths:
       operationId: getUser
       tags:
       - Users
-      summary: Get a user.
+      summary: Get a user
       responses:
         '200':
           description: The requested user.
@@ -94,7 +94,7 @@ paths:
       operationId: modifyUser
       tags:
       - Users
-      summary: Modify a user.
+      summary: Modify a user
       description: Update existing personal information for a user.
       requestBody:
         required: true
@@ -112,6 +112,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     User:
       allOf:
@@ -125,58 +144,6 @@ components:
           created_at:
             type: string
             format: date-time
-    UserPatch:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-        legal_address:
-          $ref: '#/components/schemas/Address'
-        status:
-          $ref: '#/components/schemas/UserStatus'
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
-    UserStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - BLOCKED
-      - DISABLED
-    UserEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/User'
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  detail:
-                    type: string
     Address:
       type: object
       properties:
@@ -193,6 +160,29 @@ components:
         country:
           type: string
           description: ISO 3166-1 alpha-3 country code.
+    UserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - BLOCKED
+      - DISABLED
+    UserPatch:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        legal_address:
+          $ref: '#/components/schemas/Address'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+    UserEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
     UserRequest:
       type: object
       required:
@@ -238,25 +228,35 @@ components:
             $ref: '#/components/schemas/User'
         meta:
           $ref: '#/components/schemas/PageMeta'
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
   parameters:
     PageNumber:
       name: page[number]
@@ -264,18 +264,18 @@ components:
       schema:
         type: integer
         default: 0
-    UserId:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
     PageSize:
       name: page[size]
       in: query
       schema:
         type: integer
         default: 25
+    UserId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

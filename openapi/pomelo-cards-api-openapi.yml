@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Pomelo Authentication Cards API
+  title: Pomelo Cards API
   description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
   termsOfService: https://www.pomelo.la
   contact:
@@ -23,7 +23,7 @@ paths:
       operationId: createCard
       tags:
       - Cards
-      summary: Create a card.
+      summary: Create a card
       description: Create a new nominated card, which can be physical or virtual, for a user.
       requestBody:
         required: true
@@ -46,7 +46,7 @@ paths:
       operationId: searchCards
       tags:
       - Cards
-      summary: Search cards.
+      summary: Search cards
       parameters:
       - name: user_id
         in: query
@@ -72,7 +72,7 @@ paths:
       operationId: getCard
       tags:
       - Cards
-      summary: Get a card.
+      summary: Get a card
       responses:
         '200':
           description: The requested card.
@@ -86,7 +86,7 @@ paths:
       operationId: updateCard
       tags:
       - Cards
-      summary: Update a card.
+      summary: Update a card
       description: Update the status, affinity group, or PIN of a card.
       requestBody:
         required: true
@@ -108,7 +108,7 @@ paths:
       operationId: activateCard
       tags:
       - Cards
-      summary: Activate a physical card.
+      summary: Activate a physical card
       description: Activate a physical card and optionally set its PIN.
       requestBody:
         required: true
@@ -130,7 +130,7 @@ paths:
       operationId: createCardBatch
       tags:
       - Cards
-      summary: Create a batch of innominated cards.
+      summary: Create a batch of innominated cards
       description: Create a batch of innominated cards (maximum 1,000 cards per batch).
       requestBody:
         required: true
@@ -152,7 +152,7 @@ paths:
       operationId: updateCardShipment
       tags:
       - Cards
-      summary: Update a card shipment address.
+      summary: Update a card shipment address
       description: Update the shipping address of a card. The card must be a physical nominated card with status CREATED.
       requestBody:
         required: true
@@ -168,45 +168,78 @@ paths:
               schema:
                 $ref: '#/components/schemas/CardEnvelope'
 components:
-  parameters:
-    CardId:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
-    PageNumber:
-      name: page[number]
-      in: query
-      schema:
-        type: integer
-        default: 0
-  responses:
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    CardActivationRequest:
+      type: object
+      required:
+      - card_id
+      properties:
+        card_id:
+          type: string
+        pin:
+          type: string
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    CardPatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        status_reason:
+          type: string
+          example: CLIENT_INTERNAL_REASON
+        affinity_group_id:
+          type: string
+        pin:
+          type: string
+    CardBatchEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            batch_id:
+              type: string
+            quantity:
+              type: integer
+            status:
+              type: string
+    CardList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
     Address:
       type: object
       properties:
@@ -223,15 +256,37 @@ components:
         country:
           type: string
           description: ISO 3166-1 alpha-3 country code.
-    CardList:
+    ShipmentRequest:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
+        address:
+          $ref: '#/components/schemas/Address'
+        external_tracking_id:
+          type: string
+    CardStatus:
+      type: string
+      enum:
+      - CREATED
+      - ACTIVE
+      - BLOCKED
+      - DISABLED
+      - EMERGENCY
+    CardBatchRequest:
+      type: object
+      required:
+      - affinity_group_id
+      - quantity
+      properties:
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        quantity:
+          type: integer
+          maximum: 1000
     Card:
       type: object
       properties:
@@ -268,6 +323,11 @@ components:
         start_date:
           type: string
           format: date
+    CardEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Card'
     CardRequest:
       type: object
       required:
@@ -287,104 +347,44 @@ components:
           type: string
         address:
           $ref: '#/components/schemas/Address'
-    CardStatus:
-      type: string
-      enum:
-      - CREATED
-      - ACTIVE
-      - BLOCKED
-      - DISABLED
-      - EMERGENCY
-    CardBatchRequest:
-      type: object
-      required:
-      - affinity_group_id
-      - quantity
-      properties:
-        affinity_group_id:
-          type: string
-        card_type:
-          type: string
-          enum:
-          - PHYSICAL
-          - VIRTUAL
-        quantity:
-          type: integer
-          maximum: 1000
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  detail:
-                    type: string
-    CardEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Card'
-    CardActivationRequest:
-      type: object
-      required:
-      - card_id
-      properties:
-        card_id:
-          type: string
-        pin:
-          type: string
-    ShipmentRequest:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        external_tracking_id:
-          type: string
-    CardBatchEnvelope:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            batch_id:
-              type: string
-            quantity:
-              type: integer
-            status:
-              type: string
-    CardPatch:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/CardStatus'
-        status_reason:
-          type: string
-          example: CLIENT_INTERNAL_REASON
-        affinity_group_id:
-          type: string
-        pin:
-          type: string
+  parameters:
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
+    CardId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+  responses:
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

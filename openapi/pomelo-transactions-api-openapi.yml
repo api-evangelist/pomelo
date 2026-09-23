@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Pomelo Authentication Transactions API
+  title: Pomelo Transactions API
   description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
   termsOfService: https://www.pomelo.la
   contact:
@@ -23,7 +23,7 @@ paths:
       operationId: searchTransactions
       tags:
       - Transactions
-      summary: Search transactions.
+      summary: Search transactions
       description: Search processed card transactions by user, card, date range, or status.
       parameters:
       - name: user_id
@@ -68,7 +68,7 @@ paths:
       operationId: getTransaction
       tags:
       - Transactions
-      summary: Get a transaction.
+      summary: Get a transaction
       responses:
         '200':
           description: The requested transaction.
@@ -79,7 +79,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Merchant:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        mcc:
+          type: string
+        country:
+          type: string
     Transaction:
       type: object
       properties:
@@ -160,6 +178,20 @@ components:
               type: integer
             total_elements:
               type: integer
+    TransactionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    TransactionEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Transaction'
     Amount:
       type: object
       properties:
@@ -195,51 +227,19 @@ components:
                     type: string
                   detail:
                     type: string
-    TransactionList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    TransactionEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Transaction'
-    Merchant:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        mcc:
-          type: string
-        country:
-          type: string
   parameters:
-    PageNumber:
-      name: page[number]
-      in: query
-      schema:
-        type: integer
-        default: 0
     PageSize:
       name: page[size]
       in: query
       schema:
         type: integer
         default: 25
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     bearerAuth:
       type: http

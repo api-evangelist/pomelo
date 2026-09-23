@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Pomelo Authentication Transfers API
+  title: Pomelo Transfers API
   description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
   termsOfService: https://www.pomelo.la
   contact:
@@ -23,7 +23,7 @@ paths:
       operationId: createTransfer
       tags:
       - Transfers
-      summary: Create a transfer.
+      summary: Create a transfer
       description: Move funds between card accounts to fund or reconcile the program.
       requestBody:
         required: true
@@ -44,7 +44,7 @@ paths:
       operationId: searchTransfers
       tags:
       - Transfers
-      summary: Search transfers.
+      summary: Search transfers
       parameters:
       - $ref: '#/components/parameters/PageSize'
       - $ref: '#/components/parameters/PageNumber'
@@ -66,7 +66,7 @@ paths:
       operationId: getTransfer
       tags:
       - Transfers
-      summary: Get a transfer.
+      summary: Get a transfer
       responses:
         '200':
           description: The requested transfer.
@@ -77,20 +77,66 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    PageNumber:
-      name: page[number]
-      in: query
-      schema:
-        type: integer
-        default: 0
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Transfer:
+      type: object
+      properties:
+        id:
+          type: string
+        origin_account_id:
+          type: string
+        destination_account_id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - COMPLETED
+          - REJECTED
+        created_at:
+          type: string
+          format: date-time
+    TransferRequest:
+      type: object
+      required:
+      - origin_account_id
+      - destination_account_id
+      - amount
+      properties:
+        origin_account_id:
+          type: string
+        destination_account_id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        description:
+          type: string
+    TransferEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Transfer'
     PageMeta:
       type: object
       properties:
@@ -120,52 +166,6 @@ components:
                     type: string
                   detail:
                     type: string
-    TransferRequest:
-      type: object
-      required:
-      - origin_account_id
-      - destination_account_id
-      - amount
-      properties:
-        origin_account_id:
-          type: string
-        destination_account_id:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        description:
-          type: string
-    TransferEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Transfer'
-    Transfer:
-      type: object
-      properties:
-        id:
-          type: string
-        origin_account_id:
-          type: string
-        destination_account_id:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - COMPLETED
-          - REJECTED
-        created_at:
-          type: string
-          format: date-time
     TransferList:
       type: object
       properties:
@@ -175,19 +175,19 @@ components:
             $ref: '#/components/schemas/Transfer'
         meta:
           $ref: '#/components/schemas/PageMeta'
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
   securitySchemes:
     bearerAuth:
       type: http

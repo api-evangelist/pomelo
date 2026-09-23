@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Pomelo Authentication API
   description: REST API for Pomelo (pomelo.la), the Latin American card-issuing and embedded-finance platform. Covers user onboarding and identity verification (KYC/KYB), card issuing and lifecycle management, card accounts and balances, transaction processing and history, transfers and settlements, and the real-time authorizer plus event webhooks. Authentication uses the OAuth 2.0 client-credentials grant; the issued JWT is sent as a Bearer token on every request.
@@ -23,7 +23,7 @@ paths:
       operationId: createToken
       tags:
       - Authentication
-      summary: Obtain an OAuth 2.0 access token.
+      summary: Obtain an OAuth 2.0 access token
       description: Exchange client credentials for a Bearer access token (JWT) using the client_credentials grant. Issued against https://auth.pomelo.la. The same token is returned until it expires, after which a new one is issued.
       servers:
       - url: https://auth.pomelo.la
@@ -44,20 +44,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    TokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: JWT Bearer token.
-        scope:
-          type: string
-        expires_in:
-          type: integer
-          example: 86400
-        token_type:
-          type: string
-          example: Bearer
     Error:
       type: object
       properties:
@@ -92,6 +78,20 @@ components:
           type: string
           enum:
           - client_credentials
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT Bearer token.
+        scope:
+          type: string
+        expires_in:
+          type: integer
+          example: 86400
+        token_type:
+          type: string
+          example: Bearer
   responses:
     Unauthorized:
       description: Missing or invalid Bearer token.
