@@ -59,6 +59,20 @@ components:
                     type: string
                   detail:
                     type: string
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT Bearer token.
+        scope:
+          type: string
+        expires_in:
+          type: integer
+          example: 86400
+        token_type:
+          type: string
+          example: Bearer
     TokenRequest:
       type: object
       required:
@@ -78,20 +92,6 @@ components:
           type: string
           enum:
           - client_credentials
-    TokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: JWT Bearer token.
-        scope:
-          type: string
-        expires_in:
-          type: integer
-          example: 86400
-        token_type:
-          type: string
-          example: Bearer
   responses:
     Unauthorized:
       description: Missing or invalid Bearer token.

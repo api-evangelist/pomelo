@@ -113,12 +113,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Invalid request.
       content:
@@ -131,41 +125,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+    UserId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
-    User:
-      allOf:
-      - $ref: '#/components/schemas/UserRequest'
-      - type: object
-        properties:
-          id:
-            type: string
-          status:
-            $ref: '#/components/schemas/UserStatus'
-          created_at:
-            type: string
-            format: date-time
-    Address:
-      type: object
-      properties:
-        street_name:
-          type: string
-        street_number:
-          type: string
-        zip_code:
-          type: string
-        city:
-          type: string
-        region:
-          type: string
-        country:
-          type: string
-          description: ISO 3166-1 alpha-3 country code.
-    UserStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - BLOCKED
-      - DISABLED
     UserPatch:
       type: object
       properties:
@@ -178,11 +163,29 @@ components:
           $ref: '#/components/schemas/Address'
         status:
           $ref: '#/components/schemas/UserStatus'
-    UserEnvelope:
+    UserList:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/User'
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
     UserRequest:
       type: object
       required:
@@ -219,29 +222,6 @@ components:
         operation_country:
           type: string
           description: ISO 3166-1 alpha-3 operating country (e.g. ARG, BRA, MEX).
-    UserList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
     Error:
       type: object
       properties:
@@ -257,25 +237,45 @@ components:
                     type: string
                   detail:
                     type: string
-  parameters:
-    PageNumber:
-      name: page[number]
-      in: query
-      schema:
-        type: integer
-        default: 0
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
-    UserId:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+    User:
+      allOf:
+      - $ref: '#/components/schemas/UserRequest'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            $ref: '#/components/schemas/UserStatus'
+          created_at:
+            type: string
+            format: date-time
+    UserEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
+    UserStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - BLOCKED
+      - DISABLED
+    Address:
+      type: object
+      properties:
+        street_name:
+          type: string
+        street_number:
+          type: string
+        zip_code:
+          type: string
+        city:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 alpha-3 country code.
   securitySchemes:
     bearerAuth:
       type: http

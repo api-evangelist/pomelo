@@ -77,19 +77,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Transfer:
       type: object
@@ -132,11 +119,6 @@ components:
           type: string
         description:
           type: string
-    TransferEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Transfer'
     PageMeta:
       type: object
       properties:
@@ -175,19 +157,37 @@ components:
             $ref: '#/components/schemas/Transfer'
         meta:
           $ref: '#/components/schemas/PageMeta'
+    TransferEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Transfer'
   parameters:
-    PageNumber:
-      name: page[number]
-      in: query
-      schema:
-        type: integer
-        default: 0
     PageSize:
       name: page[size]
       in: query
       schema:
         type: integer
         default: 25
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+  responses:
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

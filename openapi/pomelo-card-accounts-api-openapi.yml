@@ -75,13 +75,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/MovementList'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     PageSize:
       name: page[size]
@@ -102,6 +95,15 @@ components:
       schema:
         type: string
   schemas:
+    CardAccountList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardAccount'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
     Movement:
       type: object
       properties:
@@ -122,35 +124,6 @@ components:
         created_at:
           type: string
           format: date-time
-    CardAccount:
-      type: object
-      properties:
-        id:
-          type: string
-        user_id:
-          type: string
-        balance:
-          type: number
-          format: double
-        currency:
-          type: string
-          description: ISO 4217 currency code.
-        status:
-          type: string
-    CardAccountEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/CardAccount'
-    MovementList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Movement'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
     PageMeta:
       type: object
       properties:
@@ -165,6 +138,11 @@ components:
               type: integer
             total_elements:
               type: integer
+    CardAccountEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CardAccount'
     Error:
       type: object
       properties:
@@ -180,15 +158,37 @@ components:
                     type: string
                   detail:
                     type: string
-    CardAccountList:
+    CardAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        balance:
+          type: number
+          format: double
+        currency:
+          type: string
+          description: ISO 4217 currency code.
+        status:
+          type: string
+    MovementList:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CardAccount'
+            $ref: '#/components/schemas/Movement'
         meta:
           $ref: '#/components/schemas/PageMeta'
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
