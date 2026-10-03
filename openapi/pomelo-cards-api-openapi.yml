@@ -168,100 +168,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/CardEnvelope'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    CardEnvelope:
+    ShipmentRequest:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/Card'
-    CardPatch:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/CardStatus'
-        status_reason:
+        address:
+          $ref: '#/components/schemas/Address'
+        external_tracking_id:
           type: string
-          example: CLIENT_INTERNAL_REASON
-        affinity_group_id:
-          type: string
-        pin:
-          type: string
-    CardList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    CardBatchRequest:
-      type: object
-      required:
-      - affinity_group_id
-      - quantity
-      properties:
-        affinity_group_id:
-          type: string
-        card_type:
-          type: string
-          enum:
-          - PHYSICAL
-          - VIRTUAL
-        quantity:
-          type: integer
-          maximum: 1000
-    CardActivationRequest:
-      type: object
-      required:
-      - card_id
-      properties:
-        card_id:
-          type: string
-        pin:
-          type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  detail:
-                    type: string
-    CardStatus:
-      type: string
-      enum:
-      - CREATED
-      - ACTIVE
-      - BLOCKED
-      - DISABLED
-      - EMERGENCY
     Card:
       type: object
       properties:
@@ -298,6 +212,98 @@ components:
         start_date:
           type: string
           format: date
+    CardPatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        status_reason:
+          type: string
+          example: CLIENT_INTERNAL_REASON
+        affinity_group_id:
+          type: string
+        pin:
+          type: string
+    CardActivationRequest:
+      type: object
+      required:
+      - card_id
+      properties:
+        card_id:
+          type: string
+        pin:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    CardList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    CardBatchEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            batch_id:
+              type: string
+            quantity:
+              type: integer
+            status:
+              type: string
+    CardBatchRequest:
+      type: object
+      required:
+      - affinity_group_id
+      - quantity
+      properties:
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        quantity:
+          type: integer
+          maximum: 1000
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    CardEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Card'
     CardRequest:
       type: object
       required:
@@ -317,6 +323,14 @@ components:
           type: string
         address:
           $ref: '#/components/schemas/Address'
+    CardStatus:
+      type: string
+      enum:
+      - CREATED
+      - ACTIVE
+      - BLOCKED
+      - DISABLED
+      - EMERGENCY
     Address:
       type: object
       properties:
@@ -333,52 +347,38 @@ components:
         country:
           type: string
           description: ISO 3166-1 alpha-3 country code.
-    ShipmentRequest:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/Address'
-        external_tracking_id:
-          type: string
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
-    CardBatchEnvelope:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            batch_id:
-              type: string
-            quantity:
-              type: integer
-            status:
-              type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
     PageNumber:
       name: page[number]
       in: query
       schema:
         type: integer
         default: 0
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
     CardId:
       name: id
       in: path

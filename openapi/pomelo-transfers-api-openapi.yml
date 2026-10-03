@@ -77,7 +77,81 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    TransferRequest:
+      type: object
+      required:
+      - origin_account_id
+      - destination_account_id
+      - amount
+      properties:
+        origin_account_id:
+          type: string
+        destination_account_id:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        description:
+          type: string
+    TransferList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transfer'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    TransferEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Transfer'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
     Transfer:
       type: object
       properties:
@@ -101,93 +175,19 @@ components:
         created_at:
           type: string
           format: date-time
-    TransferRequest:
-      type: object
-      required:
-      - origin_account_id
-      - destination_account_id
-      - amount
-      properties:
-        origin_account_id:
-          type: string
-        destination_account_id:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        description:
-          type: string
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  detail:
-                    type: string
-    TransferList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transfer'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    TransferEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Transfer'
   parameters:
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
     PageNumber:
       name: page[number]
       in: query
       schema:
         type: integer
         default: 0
-  responses:
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
   securitySchemes:
     bearerAuth:
       type: http

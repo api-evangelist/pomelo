@@ -75,35 +75,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MovementList'
 components:
-  parameters:
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
-    PageNumber:
-      name: page[number]
-      in: query
-      schema:
-        type: integer
-        default: 0
-    AccountId:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
-    CardAccountList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CardAccount'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
     Movement:
       type: object
       properties:
@@ -124,25 +96,24 @@ components:
         created_at:
           type: string
           format: date-time
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
-    CardAccountEnvelope:
+    MovementList:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/CardAccount'
+          type: array
+          items:
+            $ref: '#/components/schemas/Movement'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    CardAccountList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardAccount'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
     Error:
       type: object
       properties:
@@ -173,15 +144,25 @@ components:
           description: ISO 4217 currency code.
         status:
           type: string
-    MovementList:
+    CardAccountEnvelope:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Movement'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
+          $ref: '#/components/schemas/CardAccount'
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
   responses:
     NotFound:
       description: Resource not found.
@@ -189,6 +170,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    AccountId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    PageNumber:
+      name: page[number]
+      in: query
+      schema:
+        type: integer
+        default: 0
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
   securitySchemes:
     bearerAuth:
       type: http
