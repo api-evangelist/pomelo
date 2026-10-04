@@ -76,59 +76,6 @@ paths:
                 $ref: '#/components/schemas/MovementList'
 components:
   schemas:
-    Movement:
-      type: object
-      properties:
-        id:
-          type: string
-        account_id:
-          type: string
-        type:
-          type: string
-          enum:
-          - CREDIT
-          - DEBIT
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-    MovementList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Movement'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    CardAccountList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CardAccount'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  detail:
-                    type: string
     CardAccount:
       type: object
       properties:
@@ -163,6 +110,59 @@ components:
               type: integer
             total_elements:
               type: integer
+    Movement:
+      type: object
+      properties:
+        id:
+          type: string
+        account_id:
+          type: string
+        type:
+          type: string
+          enum:
+          - CREDIT
+          - DEBIT
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  detail:
+                    type: string
+    MovementList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movement'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    CardAccountList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardAccount'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
   responses:
     NotFound:
       description: Resource not found.
@@ -171,6 +171,12 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
     AccountId:
       name: id
       in: path
@@ -183,12 +189,6 @@ components:
       schema:
         type: integer
         default: 0
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
   securitySchemes:
     bearerAuth:
       type: http

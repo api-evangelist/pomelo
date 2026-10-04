@@ -169,6 +169,55 @@ paths:
                 $ref: '#/components/schemas/CardEnvelope'
 components:
   schemas:
+    Address:
+      type: object
+      properties:
+        street_name:
+          type: string
+        street_number:
+          type: string
+        zip_code:
+          type: string
+        city:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 alpha-3 country code.
+    CardActivationRequest:
+      type: object
+      required:
+      - card_id
+      properties:
+        card_id:
+          type: string
+        pin:
+          type: string
+    CardStatus:
+      type: string
+      enum:
+      - CREATED
+      - ACTIVE
+      - BLOCKED
+      - DISABLED
+      - EMERGENCY
+    CardBatchRequest:
+      type: object
+      required:
+      - affinity_group_id
+      - quantity
+      properties:
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        quantity:
+          type: integer
+          maximum: 1000
     ShipmentRequest:
       type: object
       properties:
@@ -176,6 +225,63 @@ components:
           $ref: '#/components/schemas/Address'
         external_tracking_id:
           type: string
+    CardPatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CardStatus'
+        status_reason:
+          type: string
+          example: CLIENT_INTERNAL_REASON
+        affinity_group_id:
+          type: string
+        pin:
+          type: string
+    CardBatchEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            batch_id:
+              type: string
+            quantity:
+              type: integer
+            status:
+              type: string
+    CardEnvelope:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Card'
+    CardList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+    CardRequest:
+      type: object
+      required:
+      - user_id
+      - card_type
+      properties:
+        user_id:
+          type: string
+        affinity_group_id:
+          type: string
+        card_type:
+          type: string
+          enum:
+          - PHYSICAL
+          - VIRTUAL
+        previous_card_id:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
     Card:
       type: object
       properties:
@@ -212,27 +318,20 @@ components:
         start_date:
           type: string
           format: date
-    CardPatch:
+    PageMeta:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/CardStatus'
-        status_reason:
-          type: string
-          example: CLIENT_INTERNAL_REASON
-        affinity_group_id:
-          type: string
-        pin:
-          type: string
-    CardActivationRequest:
-      type: object
-      required:
-      - card_id
-      properties:
-        card_id:
-          type: string
-        pin:
-          type: string
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
     Error:
       type: object
       properties:
@@ -248,106 +347,13 @@ components:
                     type: string
                   detail:
                     type: string
-    CardList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    CardBatchEnvelope:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            batch_id:
-              type: string
-            quantity:
-              type: integer
-            status:
-              type: string
-    CardBatchRequest:
-      type: object
-      required:
-      - affinity_group_id
-      - quantity
-      properties:
-        affinity_group_id:
-          type: string
-        card_type:
-          type: string
-          enum:
-          - PHYSICAL
-          - VIRTUAL
-        quantity:
-          type: integer
-          maximum: 1000
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
-    CardEnvelope:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Card'
-    CardRequest:
-      type: object
-      required:
-      - user_id
-      - card_type
-      properties:
-        user_id:
-          type: string
-        affinity_group_id:
-          type: string
-        card_type:
-          type: string
-          enum:
-          - PHYSICAL
-          - VIRTUAL
-        previous_card_id:
-          type: string
-        address:
-          $ref: '#/components/schemas/Address'
-    CardStatus:
-      type: string
-      enum:
-      - CREATED
-      - ACTIVE
-      - BLOCKED
-      - DISABLED
-      - EMERGENCY
-    Address:
-      type: object
-      properties:
-        street_name:
-          type: string
-        street_number:
-          type: string
-        zip_code:
-          type: string
-        city:
-          type: string
-        region:
-          type: string
-        country:
-          type: string
-          description: ISO 3166-1 alpha-3 country code.
   responses:
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid Bearer token.
       content:
@@ -360,12 +366,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     PageNumber:
       name: page[number]
@@ -373,18 +373,18 @@ components:
       schema:
         type: integer
         default: 0
-    PageSize:
-      name: page[size]
-      in: query
-      schema:
-        type: integer
-        default: 25
     CardId:
       name: id
       in: path
       required: true
       schema:
         type: string
+    PageSize:
+      name: page[size]
+      in: query
+      schema:
+        type: integer
+        default: 25
   securitySchemes:
     bearerAuth:
       type: http
