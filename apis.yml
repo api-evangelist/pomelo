@@ -40,7 +40,7 @@ tags:
 - Payments
 - Latin America
 created: '2026-06-21'
-modified: '2026-06-21'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: pomelo:pomelo-authentication-api
@@ -228,6 +228,8 @@ apis:
   - type: Documentation
     url: https://developers.pomelo.la/guides/developers/webhooks
 common:
+- url: https://www.pomelo.la/blog
+  type: Blog
 - type: AgenticAccess
   url: agentic-access/pomelo-agentic-access.yml
 - type: DomainSecurity
