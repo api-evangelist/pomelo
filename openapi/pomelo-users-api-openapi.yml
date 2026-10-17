@@ -112,25 +112,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Address:
       type: object
@@ -159,6 +140,41 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/User'
+    UserPatch:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        legal_address:
+          $ref: '#/components/schemas/Address'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+    PageMeta:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            page_size:
+              type: integer
+            page_number:
+              type: integer
+            total_pages:
+              type: integer
+            total_elements:
+              type: integer
+    UserList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
     UserRequest:
       type: object
       required:
@@ -195,29 +211,6 @@ components:
         operation_country:
           type: string
           description: ISO 3166-1 alpha-3 operating country (e.g. ARG, BRA, MEX).
-    UserList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        meta:
-          $ref: '#/components/schemas/PageMeta'
-    PageMeta:
-      type: object
-      properties:
-        pagination:
-          type: object
-          properties:
-            page_size:
-              type: integer
-            page_number:
-              type: integer
-            total_pages:
-              type: integer
-            total_elements:
-              type: integer
     Error:
       type: object
       properties:
@@ -233,18 +226,6 @@ components:
                     type: string
                   detail:
                     type: string
-    UserPatch:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-        legal_address:
-          $ref: '#/components/schemas/Address'
-        status:
-          $ref: '#/components/schemas/UserStatus'
     User:
       allOf:
       - $ref: '#/components/schemas/UserRequest'
@@ -257,13 +238,26 @@ components:
           created_at:
             type: string
             format: date-time
+  responses:
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    UserId:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
     PageSize:
       name: page[size]
       in: query
@@ -276,6 +270,12 @@ components:
       schema:
         type: integer
         default: 0
+    UserId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
